@@ -1,0 +1,33 @@
+<% if (item.type === "item") { %>
+    <% var vidx = helpers.getVariantIdxFromItemVariation(item.item, item.variation); %>
+    <div class="item" data-param-list="<%= list.slug %>" data-param-type="<%= item.type %>"
+         data-param-id="<%= item.id %>"
+         data-param-variation="<%= item.variation ? item.variation : "" %>">
+
+        <a href="<%= item.item.url %><%= item.variation ? "/" + item.variation : "" %>">
+            <div class="title">
+                <span><%= vidx && item.item.variants && item.item.variants.length ? item.item.variants[vidx].name + " " : "" %><%= item.item.name %></span>
+            </div>
+
+            <%- include('./list-item-inner-item.ejs',{vidx}) %>
+        </a>
+        <%- include('./item-highlights.ejs', {item:item.item}) %>
+        <%- include('./user-list-remove.ejs',{item:item,viewing_user}) %>
+    </div>
+<% } else if (item.type === "villager") { %>
+
+    <div class="item" data-param-list="<%= list.slug %>" data-param-type="<%= item.type %>"
+         data-param-id="<%= item.id %>">
+
+        <a href="<%= item.item.url %>">
+            <div class="title">
+                <span><%= item.item.name %></span>
+            </div>
+            <%- include('./list-item-inner-villager.ejs') %>
+        </a>
+
+        <%- include('./item-highlights.ejs', {item:item.item}) %>
+        <%- include('./user-list-remove.ejs',{item:item,viewing_user}) %>
+    </div>
+
+<% } %>

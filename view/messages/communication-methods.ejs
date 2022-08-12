@@ -1,0 +1,8 @@
+<% if (typeof display_user !== "undefined") { %>
+    <% if (display_user.contact.discord !== "") { %><i class="fab fa-discord"></i> <% } %>
+    <% if (display_user.contact.twitter !== "") { %><i class="fab fa-twitter"></i> <% } %>
+    <% if (display_user.contact.instagram !== "") { %><i class="fab fa-instagram"></i> <% } %>
+    <% if (display_user.contact.instagram=="" && display_user.contact.twitter=="" && display_user.contact.discord=="") { %>
+        <small class="inline-pill">None.</small><br/>
+    <% } %>
+<% } %>

@@ -1,0 +1,59 @@
+<%- include('./header.ejs') %>
+<%- include('./navigation.ejs') %>
+<main>
+    <div class="container">
+        <h1><span class="header-subtext">Profile </span><%= item.contact.username %></h1>
+
+        <p>
+            Member since <%= helpers.moment(item.vc_registration_date * 1000).format("MMMM[ ]Do[, ]YYYY") %>
+        </p>
+
+        <% if (
+                (typeof item.ac_character_name === "string" && item.ac_character_name !== '') ||
+                (typeof item.ac_island_name === "string" && item.ac_island_name !== '') ||
+                (typeof item.ac_island_native_fruit === "string" && item.ac_island_native_fruit !== '') ||
+                        (typeof item.ac_island_hemisphere === "string" && item.ac_island_hemisphere !== '')
+        ) { %>
+        <br/>
+        <div class="item">
+            <div class="title"><span>Island Information</span></div>
+            <div class="content">
+                <% if (typeof item.ac_character_name === "string" && item.ac_character_name !== '') { %>
+                    <b>Character Name:</b>
+                    <%= (item.ac_character_name) %>
+                    <br/>
+                <% } %>
+
+                    <% if (typeof item.ac_island_name === "string" && item.ac_island_name !== '') { %>
+                    <b>Island Name:</b>
+                    <%= (item.ac_island_name) %>
+                    <br/>
+                <% } %>
+
+                    <% if (typeof item.ac_island_native_fruit === "string" && item.ac_island_native_fruit !== '') { %>
+                    <b>Island Native Fruit:</b>
+                        <div class="inline-image"><img src="https://villagers.club/assets/items/crop/<%=item.ac_island_native_fruit%>.png"></div> <%= (helpers.capitalizeWords(item.ac_island_native_fruit)) %>
+                    <br/>
+                <% } %>
+
+                    <% if (typeof item.ac_island_hemisphere === "string" && item.ac_island_hemisphere !== '') { %>
+                    <b>Island Hemisphere:</b>
+                    <div class="inline-image"><img src="/icons/<%=item.ac_island_hemisphere%>-hemisphere.png"></div> <%= (helpers.capitalizeWords(item.ac_island_hemisphere)) %>
+                    <br/>
+                <% } %>
+            </div>
+        </div>
+            <% } %>
+
+        <h2><%= item.contact.username %>'s Lists</h2>
+        <% if (lists && lists.length) { %>
+            <div class="grid grid-1">
+                <%- include('./list-item-short-list.ejs',{lists,viewing_user:item}) %>
+            </div>
+        <% } else{ %>
+            <p><%= item.contact.username %> Does not have any lists.</p>
+        <% } %>
+    </div>
+</main>
+<%- include('./site-footer.ejs') %>
+<%- include('./footer.ejs') %>

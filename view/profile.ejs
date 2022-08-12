@@ -1,0 +1,159 @@
+<%- include('./header.ejs') %>
+<%- include('./navigation.ejs') %>
+<main>
+    <div class="container">
+        <h1>Your Profile</h1>
+
+        <% if (is_first_login){ %>
+            <script>
+				window.setTimeout(function () {
+					if ("ga" in window) {
+						tracker = ga.getAll()[0];
+						if (tracker) {
+							tracker.send("event", "conversion", "signup", "web", 0);
+						}
+					} else if (gtag) {
+						gtag('event', 'sign_up', {'method': 'Google'});
+					}
+
+				}, 350);
+            </script>
+        <% } %>
+
+        <label for='public_user_url'>Public User Profile Link</label>
+        <input id='public_user_url' onclick="this.focus();this.select();" type="text"
+               value="https://villagers.club/user/<%= user.hash %>" readonly="readonly"/><br/>
+
+        <h3>Edit Your Profile:</h3>
+
+
+        <form action="/profile/update" method="post">
+            <label for="username">Username: (A-Z, Numbers, Spaces, #, and Hyphens allowed)</label>
+            <div class="flex-row nowrap page-search">
+                <input class="grow" type="text" name="username" id="public_user_username" placeholder="Enter Username"
+                       minlength="3" maxlength="32" pattern="[A-Za-z0-9-# ]+"
+                       value="<%- (user.contact.username || "") %>">
+                <button type="submit" value="Submit"><i class="fas fa-edit"></i> Update<span class="hide-mobile"> Username</span>
+                </button>
+            </div>
+        </form>
+
+        <div class="item">
+            <h3>Animal Crossing Profile Info
+                <small> (Shown to everyone on your Profile)</small>
+            </h3>
+            <form action="/profile/update" method="post">
+                <div class="page-social">
+                    <div class="flex-row">
+                        <label for="character_name"><i class="far fa-fw fa-user"></i> In-game Character Name:</label>
+                        <input class="grow" type="text" name="character_name" id="public_user_character_name"
+                               placeholder="Character Name"
+                               minlength="3" maxlength="32" pattern="[A-Za-z0-9- #!]+"
+                               value="<%- (user.ac_character_name || "") %>">
+                    </div>
+                    <div class="flex-row">
+                        <label for="island_name"><i class="far fa-fw fa-map"></i> In-game Island Name:</label>
+                        <input class="grow" type="text" name="island_name" id="public_user_island_name"
+                               placeholder="Island Name"
+                               minlength="3" maxlength="32" pattern="[A-Za-z0-9- #!]+"
+                               value="<%- (user.ac_island_name || "") %>">
+                    </div>
+
+                    <div class="flex-row">
+                        <label for="island_native_fruit"><i class="fas fa-fw fa-seedling"></i> In-game Native Fruit:</label>
+                        <select name="island_native_fruit" id="public_user_island_native_fruit">
+                            <option value="">N/A</option>
+                            <option value="apple" <%- (user.ac_island_native_fruit === "apple" ? "selected" : "") %>>Apple</option>
+                            <option value="cherry" <%- (user.ac_island_native_fruit === "cherry" ? "selected" : "") %>>Cherry</option>
+                            <option value="orange" <%- (user.ac_island_native_fruit === "orange" ? "selected" : "") %>>Orange</option>
+                            <option value="peach" <%- (user.ac_island_native_fruit === "peach" ? "selected" : "") %>>Peach</option>
+                            <option value="pear" <%- (user.ac_island_native_fruit === "pear" ? "selected" : "") %>>Pear</option>
+                        </select>
+                    </div>
+
+                    <div class="flex-row">
+                        <label for="island_hemisphere"><i class="fas fa-fw fa-globe"></i> In-game Hemisphere:</label>
+                        <select name="island_hemisphere" id="public_user_island_hemisphere">
+                            <option value="">N/A</option>
+                            <option value="northern" <%- (user.ac_island_hemisphere === "northern" ? "selected" : "") %>>Northern</option>
+                            <option value="southern" <%- (user.ac_island_hemisphere === "southern" ? "selected" : "") %>>Southern</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" value="Submit"><i class="fas fa-edit"></i> Update<span class="hide-mobile"> Contact Info</span>
+                </button>
+            </form>
+        </div>
+        <br/>
+
+        <div class="item">
+            <h3>Contact Information
+                <small> (Only shown to friends and accepted trades)</small>
+            </h3>
+            <form action="/profile/update" method="post">
+                <div class="page-social">
+                    <div class="flex-row">
+                        <label for="discord"><i class="fab fa-discord"></i> Discord Username: (Join our <a
+                                    href="https://discord.gg/dr89DQZ"
+                                    rel="noopener"
+                                    onclick="if ('ga' in window) {tracker = ga.getAll()[0];if (tracker) {tracker.send('event', 'intent', 'discord', 'web', 0);}}"
+                                    target="_blank" aria-label="Discord">
+                                Discord</a>!)</label>
+                        <input class="grow" type="text" name="discord" id="public_user_discord"
+                               placeholder="Discord Username#1234"
+                               minlength="3" maxlength="32" pattern="[A-Za-z0-9- #!_./]+"
+                               value="<%- (user.contact.discord || "") %>">
+                    </div>
+                    <div class="flex-row">
+                        <label for="twitter"><i class="fab fa-twitter"></i> Twitter Username: (Follow our <a
+                                    href="https://twitter.com/VillagersClub"
+                                    rel="noopener"
+                                    onclick="if ('ga' in window) {tracker = ga.getAll()[0];if (tracker) {tracker.send('event', 'intent', 'twitter', 'web', 0);}}"
+                                    target="_blank" aria-label="Twitter">
+                                Twitter</a>!)</label>
+                        <input class="grow" type="text" name="twitter" id="public_user_twitter"
+                               placeholder="Twitter Username"
+                               minlength="3" maxlength="32" pattern="[A-Za-z0-9- @_.]+"
+                               value="<%- (user.contact.twitter || "") %>">
+                    </div>
+                    <div class="flex-row">
+                        <label for="instagram"><i class="fab fa-instagram"></i> Instagram Username: (Follow our <a
+                                    href="https://www.instagram.com/villagersclub/"
+                                    rel="noopener"
+                                    onclick="if ('ga' in window) {tracker = ga.getAll()[0];if (tracker) {tracker.send('event', 'intent', 'instagram', 'web', 0);}}"
+                                    target="_blank" aria-label="Instagram">
+                                Instagram</a>!)</label>
+                        <input class="grow" type="text" name="instagram" id="public_user_instagram"
+                               placeholder="Instagram Username"
+                               minlength="3" maxlength="32" pattern="[A-Za-z0-9- @_.]+"
+                               value="<%- (user.contact.instagram || "") %>">
+                    </div>
+                </div>
+
+                <button type="submit" value="Submit"><i class="fas fa-edit"></i> Update<span class="hide-mobile"> Contact Info</span>
+                </button>
+            </form>
+        </div>
+
+        <br/>
+
+        <br/>
+        <div class="page-search">
+            You have <%= (lists.length) %>/5 Lists.
+            <% if ( lists.length < 5) { %>
+                <form action="/profile/create/list" method="post" class="flex-row nowrap">
+                    <input name="list_name" type="text" placeholder="New List Name" value="" class="grow">
+                    <button type="submit" value="Submit"><i class="fas fa-plus"></i> Create New List</button>
+                </form>
+            <% } %>
+        </div>
+        <div class="grid grid-1 grid-md">
+            <%- include('./list-item-short-list.ejs',{lists,viewing_user:user}) %>
+        </div>
+        <hr/>
+        <a class="btn warning" href="/logout">Log out</a>
+    </div>
+</main>
+<%- include('./site-footer.ejs') %>
+<%- include('./footer.ejs') %>

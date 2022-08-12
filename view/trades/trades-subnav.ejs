@@ -1,0 +1,14 @@
+<div>
+    <div style="font-weight:bolder;color:saddlebrown;border-bottom: 2px solid brown;">This feature is now in Open Beta,
+        please excuse any errors.
+        <br/>
+        Join our <a href="https://discord.gg/dr89DQZ" rel="noopener"
+                    onclick="if ('ga' in window) {tracker = ga.getAll()[0];if (tracker) {tracker.send('event', 'intent', 'discord', 'web', 0);}}"
+                    target="_blank" aria-label="Discord">Discord</a> for the latest updates and bug reports!
+    </div>
+    <a class="btn <%= (canonical === "/trades") ? "current" : "" %>" href="/trades">Trading Dashboard</a>
+    <a class="btn <%= (canonical === "/trades/sell") ? "current" : "" %>" href="/trades/sell"><i
+                class="fas fa-sign-out-alt fa-rotate-270"></i> Sell an Item / Villager</a>
+    <a class="btn <%= (canonical === "/trades/buy") ? "current" : "" %>" href="/trades/buy"><i
+                class="fas fa-sign-in-alt fa-rotate-90"></i> Buy an Item / Villager</a>
+</div>

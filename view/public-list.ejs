@@ -1,0 +1,52 @@
+<%- include('./header.ejs') %>
+<%- include('./navigation.ejs') %>
+<main>
+    <div class="container">
+        <h1><span class="header-subtext"><%= item.contact.username %>'s List</span><%= list.name %></h1>
+        <p><a class="btn" href="/user/<%= item.hash %>">View <%= item.contact.username %>'s Profile</a></p>
+        <div class="flex-row nowrap page-search">
+            <input class="grow" id="input-link-list" type="text"
+                   value="https://villagers.club/user/<%= item.hash %>/<%= list.slug %>"
+                   readonly/>
+            <button type="submit" class="right cursor-pointer" onclick="copyLinkButton(this,'input-link-list')"><i
+                        class="fas fa-link"></i> <span id="copy-text">Copy Link<span
+                            class="hide-mobile"> to List</span></span></button>
+        </div>
+        <% if (user && user.hash === item.hash) { %>
+            <form action="/api/list/rename" method="post">
+                <div class="flex-row nowrap page-search">
+                    <input name="list_name" type="text" placeholder="List Name" value="<%= list.name %>" class="grow">
+                    <input name="list_slug" type="hidden" value="<%= list.slug %>">
+                    <button class="cursor-pointer" type="submit" value="Submit"><i class="fas fa-edit"></i> Update Name
+                    </button>
+                </div>
+            </form>
+        <% } %>
+
+        <% if (items && items.length) { %>
+            <div class="grid grid-4 items-list">
+                <% for(var i = 0; i < items.length; i++) { %>
+
+                    <%- include('./list-item-render.ejs',{item:items[i],viewing_user:item}) %>
+
+                <% } %>
+            </div>
+
+        <% } else{ %>
+            <p><%= list.name %> does not have any entries.</p>
+        <% } %>
+
+        <% if (user && user.hash === item.hash) { %>
+
+            <br/><br/>
+            <form action="/api/list/delete" method="post">
+                <input name="list_slug" type="hidden" value="<%= list.slug %>">
+                <button type="submit" value="Submit" class="btn warning cursor-pointer"><i class="fas fa-times"></i>
+                    Delete List
+                </button>
+            </form>
+        <% } %>
+    </div>
+</main>
+<%- include('./site-footer.ejs') %>
+<%- include('./footer.ejs') %>

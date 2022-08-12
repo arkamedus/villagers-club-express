@@ -1,0 +1,81 @@
+<%- include('./header.ejs') %>
+
+<main>
+
+    <div class="hero flex align-center grow">
+        <div class="container med">
+            <div class="icon-huge">
+                <img src="/villagers-club-logo.svg" alt="VillagersClub logo"/>
+            </div>
+            <h1 hidden>Welcome to VillagersClub</h1>
+
+            <!--
+        <% if (!user) { %>
+            <p>Welcome! Please <a href="/login">log in</a>.</p>
+        <% } else { %>
+            <p>Hello, <%= user.name %>. View your <a href="/profile">profile</a>.</p>
+        <% } %>
+        <a href="/about"><input type="submit" value="Get Started"/></a><br/>
+        <a href="/recipes"><input type="submit" value="Recipes & DIYs"/></a><br/>
+-->
+
+
+            <div class="flex-row nowrap page-search">
+                <input id='search-input-box' class="grow" type="text" placeholder="Enter Search..."
+                       value="<%- (search || "") %>" aria-label="Search">
+                <button id="search-input-button"><i class="fas fa-search fa-fw"></i> Search</button>
+            </div>
+
+            <div class="grid grid-3 leading-links">
+                <a href="/villagers" class="btn alt">
+                    <img class="icon-image" alt="" aria-hidden="true" src="/icons/villagers.png">Villagers</a>
+                <a href="/clothing" class="btn alt">
+                    <img class="icon-image" alt="" aria-hidden="true" src="/icons/tops.png">Clothing</a>
+                <a href="/furniture" class="btn alt">
+                    <img class="icon-image" alt="" aria-hidden="true" src="/icons/furniture.png">Furniture</a>
+                <a href="/tools" class="btn alt">
+                    <img class="icon-image" alt="" aria-hidden="true" src="/icons/tools.png">Tools</a>
+                <a href="/critters" class="btn alt">
+                    <img class="icon-image" alt="" aria-hidden="true" src="/icons/critters.png">Critters</a>
+                <a href="/other" class="btn alt">
+                    <img class="icon-image" alt="" aria-hidden="true" src="/icons/other.png">Other</a>
+
+                <a href="/sets" class="btn premium">Sets</a>
+                <!--<a href="/styles" class="btn premium">Styles</a>-->
+                <!--<a href="/themes" class="btn premium">Themes</a>-->
+                <a href="/reactions" class="btn premium">Reactions</a>
+
+                <% if (!user) { %>
+                    <a href="/login" class="btn premium login"><i class="far fa-user-circle fa-fw"></i><span
+                                class=""> Sign In</span></a>
+                <% } else { %>
+                    <a href="/profile" class="btn premium login"><i
+                                class="far fa-user-circle fa-fw"></i><span> <%= (user.contact.username) %></span></a>
+                <% } %>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container med">
+        <h1 style="font-weight: bolder">Welcome to VillagersClub!</h1>
+        <p>The world's largest and most up-to-date Animal Crossing: New Horizons Villagers, Clothing, and Furniture
+            Community Website.</p>
+
+        <div class="grid grid-1 items-list" style="margin-top:20px;">
+            <div class="item">
+                <div class="title"><span>So what is VillagersClub?</span></div>
+                <div class="content">
+                    VillagersClub is a place for people who love Animal Crossing and Animal Crossing: New Horizons.<br>
+                    We are a resource for players and Animal Crossing Fans alike.
+                </div>
+            </div>
+
+            <%- include('./membership-perks.ejs') %>
+        </div>
+
+
+    </div>
+</main>
+<%- include('./site-footer.ejs') %>
+<%- include('./footer.ejs') %>

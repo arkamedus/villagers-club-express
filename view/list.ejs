@@ -1,0 +1,102 @@
+<%- include('./header.ejs') %>
+<%- include('./navigation.ejs') %>
+<main>
+    <div class="container">
+
+        <div class="page-header flex-row align-end">
+            <h1><span hidden>Animal Crossing </span><%- header %><span hidden> in New Horizons</span></h1>
+            <% if (subcategories.length) { %>
+            <div class="fill last">
+                    <a href="/<%= category %>"
+                       class="btn <%= (typeof subcategory == "undefined") ? "current" : "" %>">All <%= helpers.capitalizeWords(category) %></a>
+
+                <% for(var i = 0; i < subcategories.length; i++) { %>
+                    <a href="<%= base_url %>/<%= helpers.slugify(subcategories[i]) %>"
+                       class="btn <%= helpers.slugify(subcategories[i]) === (typeof subcategory !== "undefined" ? subcategory : category) ? "current" : "" %>">
+                        <% if (category !== "villagers") { %> <img
+                                class="icon-image" alt=""
+                                src="/icons/<%= subcategories[i] %>.png">
+                        <% } %>
+                        <%= helpers.capitalizeWords(subcategories[i]) %>
+                    </a>
+                <% } %>
+            </div>
+            <% } %>
+            <%- pagination %>
+        </div>
+
+        <% if (search !== false) { %>
+            <div class="flex-row nowrap page-search">
+                <input id='search-input-box' class="grow" type="text" placeholder="Enter Search..."
+                       value="<%- (search || "") %>">
+                <button id="search-input-button"><i class="fas fa-search fa-fw"></i> Search</button>
+            </div>
+        <% } %>
+
+        <% if (items.length > 0) { %>
+
+            <div class="grid grid-4 items-list">
+                <% for(var i = 0; i < items.length; i++) { %>
+
+                    <% if (items[i].type === "item" || items[i].type === "critter"  ) { %>
+                        <div class="item" data-param-type="item" data-param-id="<%= items[i].id %>"
+                             data-param-variation="<%= items[i]._variation ? items[i]._variation.id : "" %>">
+                            <a href="/<%= items[i].category + (items[i].subcategory ? "/" + items[i].subcategory : '') %>/<%= items[i].id %><% if (items[i]._variation && items[i]._variation.variation) { %>/<%= helpers.slugify(items[i]._variation.id) %><% } %>">
+
+                                <div class="title"><span><%= items[i].name %></span></div>
+                                <div class="content text-center">
+                                    <img src="<%= items[i].critterpediaImage || (items[i]._variation ? items[i]._variation.image || items[i]._variation.closetImage || items[i]._variation.storageImage : false) || items[i].image || ((items[i].variants) ? items[i].variants[0].image || items[i].variants[0].closetImage : false) || (items[i].albumImage || items[i].variants[0].closetImage || items[i].variants[0].image) %>"
+                                         alt="Animal Crossing New Horizons <%= items[i].name %> Image">
+                                </div>
+                            </a>
+
+                            <%- include('./item-highlights.ejs', {item:items[i]}) %>
+                            <%- include('./user-list-widget.ejs',{item:items[i]}) %>
+                        </div>
+                    <% } else { %>
+                        <div class="item" data-param-type="villager" data-param-id="<%= items[i].id %>">
+                            <a href="/<%= items[i].category %>/<%= items[i].id %>">
+                                <div class="title"><span><%= items[i].name %></span></div>
+                                <div class="content text-center">
+                                    <img src="<%= items[i].image %>"
+                                         alt="Animal Crossing New Horizons <%= items[i].name %> Image">
+                                </div>
+                            </a>
+                            <%- include('./item-highlights.ejs', {item:items[i]}) %>
+                            <%- include('./user-list-widget.ejs',{item:items[i]}) %>
+                        </div>
+
+
+                    <% } %>
+
+                <% } %>
+            </div>
+        <% } else { %>
+
+            <% if (search.length > 0) { %>
+                <p>No results were found.</p>
+            <% } else { %>
+                <p>Search for Items, Variations, Villagers, Themes, Sets, Birthdays, Colors, and more!</p>
+            <% } %>
+
+        <% } %>
+        <%- pagination %>
+
+
+        <% if (Math.random() < 0.5) { %>
+        <%- include('ads-google.ejs') %>
+            <% } else{ %>
+            <%- include('ads-amazon.ejs') %>
+        <% } %>
+
+        <% if (!user) { %>
+            <div style="padding-top:30px;">
+                <%- include('./membership-perks.ejs') %>
+            </div>
+        <% } %>
+
+    </div>
+
+</main>
+<%- include('./site-footer.ejs') %>
+<%- include('./footer.ejs') %>

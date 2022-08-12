@@ -1,0 +1,10 @@
+.idea
+.env
+.DS_Store
+dist
+tmp
+node_modules
+data
+secrets
+package-lock.json
+.nyc_output

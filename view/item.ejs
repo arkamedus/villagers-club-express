@@ -1,0 +1,302 @@
+<%- include('./header.ejs') %>
+<%- include('./navigation.ejs') %>
+<main>
+
+    <div class="container">
+        <h1><%= (variation ? "" + helpers.capitalizeWords(item.variants[helpers.getVariantIdxFromItemVariation(item, variation)].name) + " " : '') %><%= item.name %><%= (item.realArtworkTitle ? ": " + item.realArtworkTitle : "") %></h1>
+        <p class="breadcrumbs">
+            <a href="/<%= item.category %>"><%= helpers.capitalizeFirstWord(item.category) %></a>
+            <% if (item.subcategory) { %> &gt; <a
+                    href="/<%= item.category %>/<%= item.subcategory %>"><%= helpers.capitalizeFirstWord(item.subcategory) %></a>
+            <% } %>
+            &gt;
+            <% if (variation) { %>
+                <a href="/<%= item.category %><%= (item.subcategory ? "/" + item.subcategory : '') %>/<%= item.id %>"><%= item.name %></a>
+                &gt; <%= (variation ? helpers.capitalizeWords(item.variants[helpers.getVariantIdxFromItemVariation(item, variation)].name) : '') %>
+            <% } else { %>
+                <%= item.name %>
+            <% } %>
+        </p>
+
+        <div class="grid grid-2" style="margin-bottom: 18pt;">
+            <div class="item-view-image-container flex" data-param-type="item" data-param-id="<%= item.id %>"
+                 data-param-variation="<%= variation ? variation : "" %>"><img
+                        src="<%= item.critterpediaImage || (variation ? variation_item.image || variation_item.closetImage || variation_item.storageImage || false : false) || item.image || item.albumImage %>"
+                        class="item-view"
+                        alt="Animal Crossing New Horizons <%= item.name %><%= (variation ? " (" + helpers.capitalizeWords(variation_item.name) + ")" : '') %> Image">
+                <%- include('./user-list-widget.ejs',{item:item}) %>
+
+            </div>
+
+            <% if (item.description) { %>
+                <div>
+                    <blockquote><em><%= (item.description) %></em><!--<br/><cite>&mdash; Description</cite>-->
+                    </blockquote>
+                </div>
+            <% } %>
+        </div>
+
+
+        <div class="grid grid-2">
+
+            <div class="item">
+                <div class="title"><span>Details about <%= item.name %></span></div>
+                <div class="content">
+                    <% if (item.type === "item") { %> Is craftable: <%= (item.diy ? "Yes" : "No") %> <br/>
+                    <% } %>
+                    <% if (item.customizationKitCost) { %>Is customizable: <% if ((item.customizationKitCost)) { %> Yes,
+                    Costs <span
+                            class="inline-pill"><span
+                                class="inline-image"><img
+                                    src="//villagers.club/assets/icons/customize-kit.png"></span> <%= item.customizationKitCost %></span>
+                    Customization Kits<% } else { %> No <% } %> <br/>
+                    <% } %>
+
+                    <% if (item.totalCatchesToUnlock) { %>Total Catches To Unlock: <span class="inline-pill"><%= item.totalCatchesToUnlock %></span><br/>
+                    <% } %>
+
+                        <% if (item.catchDifficulty) { %>Catch Difficulty: <span class="inline-pill"><%= item.catchDifficulty %></span><br/>
+                    <% } %>
+
+                        <% if (item.shadow !== undefined) { %>Shadow Size: <%= (item.shadow) %> <br/>
+                        <% } %>
+
+                    <% if (item.vision) { %>Vision Cone: <span class="inline-pill"><%= item.vision %></span><br/>
+                    <% } %>
+
+                    <% if (item.size !== undefined) { %>Item Size: <%= (item.size) %> <br/>
+                    <% } %>
+
+                        <% if (item.stackSize && item.stackSize !== 1) { %>Item Stack Size: <span class="inline-pill"><%= (item.stackSize) %></span> <br/>
+                    <% } %>
+
+                        <% if (item.movementSpeed !== undefined) { %>Movement Speed: <%= (item.movementSpeed) %> <br/>
+                        <% } %>
+
+                    <% if (item.interact !== undefined) { %>Is Interactive: <%= (item.interact ? "Yes" : "No") %> <br/>
+                    <% } %>
+
+                    <% if (item.uses !== undefined) { %>Item Uses: <%= (item.uses > 0) ? item.uses : "Unlimited" %>
+                    <br/>
+                    <% } %>
+
+                    <% if (item.realArtworkTitle !== undefined) { %>Artwork Title: <%= (item.realArtworkTitle) %>
+                    <br/>
+                    <% } %>
+                    <% if (item.artist !== undefined) { %>Item Artist: <%= (item.artist) %>
+                    <br/>
+                    <% } %>
+
+                        <% if (item.tag) { %>Item Tag: <a href="/tags/<%= helpers.slugify(item.tag) %>" class="inline-pill"><%= item.tag %></a>
+                        <br/>
+                        <% } %>
+
+                    <% if (item.item_sets && item.item_sets.length ) { %>Part of Series:
+                    <%- (helpers.listToString((item.item_sets).map(function (item) {
+                        return '<a href="/sets/' + helpers.slugify(item) + '" class="inline-pill">' + helpers.capitalizeFirstWord(item) + "</a>";
+                    }))) %><br/>
+                    <% } %>
+
+                        <% if (item.styles && item.styles.length ) { %>Item style:
+                        <%- (helpers.listToString((item.styles).map(function (item) {
+                            return '<a href="/styles/' + helpers.slugify(item) + '" class="inline-pill">' + helpers.capitalizeFirstWord(item) + "</a>";
+                        }))) %><br/>
+                        <% } %>
+
+                    <% if (item.themes && item.themes.length) { %>
+                        Item themes:
+                        <%- (helpers.listToString((variation && variation.themes && variation.themes.length ? variation.themes : (variation && variation.labelThemes && variation.labelThemes.length ? variation.labelThemes : item.themes)).map(function (item) {
+                            return '<a href="/themes/' + helpers.slugify(item) + '" class="inline-pill">' + helpers.capitalizeFirstWord(item) + "</a>";
+                        }))) %><br/>
+                    <% } %>
+
+                        <% if ((item.colors && item.colors.length) || (variation_item.colors && variation_item.colors.length)) { %>
+                        Item color:
+                        <%- (helpers.listToString(((item.colors && item.colors.length) ? item.colors : (variation_item.colors && variation_item.colors.length) ? variation_item.colors : []).map(function (item) {
+                            return '<a href="/search/' + helpers.slugify(item) + '" class="inline-pill">' + helpers.capitalizeFirstWord(item) + "</a>";
+                        }))) %><br/>
+                    <% } %>
+
+                        <% if (item.seasonEvent) { %>Season Event: <a href="/seasons/<%= helpers.slugify(item.seasonEvent) %>" class="inline-pill"><%= helpers.capitalizeWords(item.seasonEvent) %></a>
+                        <% if (item.seasonEventExclusive) { %><span class="inline-pill">Exclusive</span>
+                        <% } %>
+                        <br/>
+                        <% } %>
+
+                        <% if (item.versionAdded !== undefined) { %>Version Added: <span
+                                class="inline-pill"><%= (item.versionAdded) %></span> <br/>
+                        <% } %>
+
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="title"><span>Shopping information for <%= item.name %></span></div>
+                <div class="content">
+                    Orderable from Catalog: <%= (item.catalog === "For sale") ? "Yes" : "No" %> <br/>
+
+                    <% if (item.buyMiles && item.buyMiles > 0) { %>Buy Price: <span class="inline-pill"><span
+                                class="inline-image"><img
+                                    src="//villagers.club/assets/icons/<%= helpers.getCurrencyIcon((item.buyMiles) | 0, 'miles') %>.png"></span> <%= (item.buyMiles.toLocaleString()) %></span>
+                    Nook Miles <br/>
+                    <% } %>
+
+                    <% if (item.buy && item.buy > 0) { %>Buy Price: <span class="inline-pill"><span
+                                class="inline-image"><img
+                                    src="//villagers.club/assets/icons/<%= helpers.getCurrencyIcon((item.buy) | 0, 'bells') %>.png"></span> <%= (item.buy.toLocaleString()) %></span>
+                    Bells <br/>
+                    <% } %>
+
+                    <% if (item.sell && item.sell > 0) { %>Sell Price: <span class="inline-pill"><span
+                                class="inline-image"><img
+                                    src="//villagers.club/assets/icons/<%= helpers.getCurrencyIcon((variation && variation.sell !== undefined ? variation.sell : item.sell) | 0, 'bells') %>.png"></span> <%= ((variation && variation.sell !== undefined ? variation.sell : item.sell).toLocaleString()) %></span>
+                    Bells <br/>
+                    <% } %>
+                    <% if (item.sell && item.sell > 0) { %>Drop-Off Box Sell Price: <span class="inline-pill"><span
+                                class="inline-image"><img
+                                    src="//villagers.club/assets/icons/<%= helpers.getCurrencyIcon(((variation && variation.sell !== undefined ? variation.sell : item.sell) * 0.8) | 0, 'bells') %>.png"></span> <%= (((variation && variation.sell !== undefined ? variation.sell : item.sell) * 0.8) | 0).toLocaleString() %></span>
+                    Bells <br/>
+
+                    Do you have this item? <a href="/trades/sell" class="inline-pill" style="white-space: nowrap;" >Make Sell Offer</a><br />
+                   <% if (user) { %> Looking for this item? <a href="/trades/buy/<%= item.id %>" class="inline-pill" style="white-space: nowrap;">Visit Trading Post</a><br /><% } %>
+
+                    <% } %>
+                </div>
+            </div>
+
+            <% if (recipeData) { %>
+                <div class="item">
+                    <div class="title"><span>Crafting recipe for <%= item.name %></span></div>
+                    <div class="content">
+                        <% for(var i = 0; i < recipeData.length; i++) { %>
+                            <div class="recipe-item">
+                                <span class="inline-image"><img src="<%= recipeData[i].material.image %>"></span>
+                                <a href="<%= recipeData[i].material.url %>"
+                                   class="recipe-name"><%= recipeData[i].material.name %></a>
+                                <span class="inline-number"><%= recipeData[i].count %></span>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
+
+            <% if (item && item.variants && item.variants[0].filename && item.sourceSheet === "Music") { %>
+                <div class="item">
+                    <div class="title"><span>Listen to <%= item.name %></span></div>
+                    <div class="content">
+                        <audio controls style="width: 100%;outline: none;" controls controlsList="nodownload">
+                            <source src="https://cdn2.nookdb.io/audio/<%= item.variants[0].filename %>_song.mp3"
+                                    type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            <% } %>
+
+            <% if (item && item.source && item.source.length > 0) { %>
+                <div class="item">
+                    <div class="title"><span>Where to find <%= item.name %></span></div>
+                    <div class="content">
+                        <ul>
+                            <% for(var i = 0; i < item.source.length; i++) { %>
+                                <li><%- item.source[i] %></li>
+                            <% } %>
+                        </ul>
+                        <% if (item.sourceNotes) { %>
+                            <span class="btn small-info disabled"
+                                       style="padding-top:4px;padding-bottom:4px;margin-top:4px;"><%= item.sourceNotes %></span>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
+
+            <% if (item && item.type === 'critter') { %>
+                <div class="item">
+                    <div class="title"><span>How to find <%= item.name %></span></div>
+                    <div class="content">
+                        <% if (item.whereHow) { %>Where / How: <%= item.whereHow %><br/>
+                        <% } %>
+                        <% if (item.weather) { %>Weather: <%= item.weather %><br/>
+                        <% } %>
+                        <% if (false && item.activeMonths && item.activeHours) { %><%- helpers.generateCritterDateTimes(item) %>
+                        <br/>
+                        <% } %>
+
+                    </div>
+                </div>
+            <% } %>
+
+            <% if (item.variants && item.variants.length > 1) { %>
+                <div class="item last-full">
+                    <div class="title"><span><%= item.name %> <%= helpers.capitalizeFirstWord(item.category) %> Variations</span>
+                    </div>
+                    <div class="content">
+                        <div class="variation grid grid-4">
+                            <% for(var i = 0; i < item.variants.length; i++) { %>
+                                <a href="<%= item.url %>/<%= item.variants[i].id %>"
+                                   class="variation-item">
+                                    <div class="inline-image"><img
+                                                src="<%= item.variants[i].closetImage || item.variants[i].image %>">
+                                    </div>
+                                    <span class="btn small-info"><%= item.variants[i].name %></span></a>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+
+            <% if (item.series && item.seriesItems.length) { %>
+                <div class="item last-full">
+                    <div class="title">
+                        <span><%= item.name %> is part of the <%= helpers.capitalizeFirstWord(item.series) %> Set / Series</span>
+                    </div>
+                    <div class="content">
+                        <div class="variation grid grid-4">
+                            <% for(var i = 0; i < item.seriesItems.length; i++) { %>
+                                <a href="<%= item.seriesItems[i].url %>/<%= item.seriesItems[i].variants[helpers.getVariantIdxFromItemVariation(item.seriesItems[i], variation)].id %>"
+                                   class="variation-item">
+                                    <div class="inline-image"><img
+                                                src="<%= variation ? (item.seriesItems[i].variants[helpers.getVariantIdxFromItemVariation(item.seriesItems[i], variation)].closetImage || item.seriesItems[i].variants[helpers.getVariantIdxFromItemVariation(item.seriesItems[i], variation)].image) : item.seriesItems[i].variants[0].image %>"
+                                                alt="Animal Crossing New Horizons <%= item.seriesItems[i].name %> Image">
+                                    </div>
+                                    <span class="btn small-info"><%= item.seriesItems[i].name %></span></a>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+
+            <% if (item.set && item.setItems.length) { %>
+                <div class="item last-full">
+                    <div class="title">
+                        <span><%= item.name %> is part of the <%= helpers.capitalizeWords(item.set) %> Set</span>
+                    </div>
+                    <div class="content">
+                        <div class="variation grid grid-4">
+                            <% for(var i = 0; i < item.setItems.length; i++) { %>
+                                <a href="<%= item.setItems[i].url %>/<%= item.setItems[i].variants[helpers.getVariantIdxFromItemVariation(item.setItems[i], variation)].id %>"
+                                   class="variation-item">
+                                    <div class="inline-image"><img
+                                                src="<%= variation ? (item.setItems[i].variants[helpers.getVariantIdxFromItemVariation(item.setItems[i], variation)].closetImage || item.setItems[i].variants[helpers.getVariantIdxFromItemVariation(item.setItems[i], variation)].image) : item.setItems[i].variants[0].image %>"
+                                                alt="Animal Crossing New Horizons <%= item.setItems[i].name %> Image">
+                                    </div>
+                                    <span class="btn small-info"><%= item.setItems[i].name %></span></a>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+
+        </div>
+
+        <% if (!user) { %>
+            <div style="padding-top:30px;">
+                <%- include('./membership-perks.ejs') %>
+            </div>
+        <% } %>
+
+    </div>
+</main>
+<% if (item.schema) { %> <%- item.schema %> <% } %>
+<%- include('./site-footer.ejs') %>
+<%- include('./footer.ejs') %>

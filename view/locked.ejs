@@ -1,0 +1,22 @@
+<%- include('./header.ejs') %>
+<%- include('./navigation.ejs') %>
+<main>
+    <div class="container med">
+        <% if (!user) { %>
+            <h1>That content is only available to Members.</h1>
+            <h3>
+                <%- include('./perks.ejs') %>
+            </h3>
+            <div class="item">
+                <div class="title alt"><span>Join the Club, Become a Member</span></div>
+                <div class="content">
+                    <a href="/login" class="btn alt"><i class="far fa-user-circle fa-fw"></i> Sign In</a>
+                </div>
+            </div>
+        <% } else { %>
+            <h1>You are already a Member, all content is unlocked!</h1>
+        <% } %>
+    </div>
+</main>
+<%- include('./site-footer.ejs') %>
+<%- include('./footer.ejs') %>

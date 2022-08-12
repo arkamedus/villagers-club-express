@@ -1,0 +1,75 @@
+<%- include('../header.ejs') %>
+<%- include('../navigation.ejs') %>
+<main>
+    <div class="container">
+
+        <div class="page-header">
+            <h1><span class="header-subtext">Trading Post</span><%= helpers.capitalizeWords(header) %></h1>
+            <%- include('./trades-subnav.ejs') %>
+
+        </div>
+        <% if (!user) { %>
+        <h2>Sign In to access your Trading Dashboard as well as placing Sell and Buy Orders.</h2>
+        <% } %>
+            <h3>How it Works:</h3>
+        <ul>
+            <li><strong>In Game Trading Only.</strong></li>
+            <li><strong>The highest bidder doesn't always win.</strong><br/>In order to discourage price-gouging and
+                item scalping, we encourage users to make trades for things they want, this includes touch
+                trading/cataloging.
+            </li>
+            <li><strong>Negotiable Terms</strong><br/>If you're open to taking offers for your Trade Request you can
+                allow users to negotiate by submitting their own offer. This could lead you to discover items and
+                villagers you may have never considered.
+            </li>
+        </ul>
+
+        <% if (user) { %>
+
+            <h2>Your Active Buy Requests</h2>
+            <br>
+            <div class="grid grid-2">
+
+                <% for(var i = 0; i < user_buy_offers.length; i++) { %>
+
+                    <%- include('./trade-request-overview-buy.ejs',{offer:user_buy_offers[i]}) %>
+
+                <% } %>
+            </div>
+
+            <h2>Your Active Sell Offers</h2>
+
+            <div class="grid grid-2">
+                <% for(var i = 0; i < user_sell_offers.length; i++) { %>
+
+                    <%- include('./trade-request-overview-sell.ejs',{trade:user_sell_offers[i]}) %>
+
+                <% } %>
+            </div>
+
+            <h2>Your Completed / Cancelled Offers</h2>
+
+            <div class="grid grid-2">
+                <% for(var i = 0; i < user_ended.length; i++) { %>
+
+                    <% if (user_ended[i].type && user_ended[i].type == 'sell') { %>
+                        <%- include('./trade-request-overview-sell.ejs',{trade:user_ended[i]}) %>
+                    <% }else{ %><%- include('./trade-request-overview-buy.ejs',{offer:user_ended[i]}) %>
+
+                    <% } %>
+                <% } %>
+            </div>
+
+        <% } %>
+        <% if (!user) { %>
+
+            <div style="padding-top:30px;">
+                <%- include('../membership-perks.ejs') %>
+            </div>
+        <% } %>
+
+    </div>
+
+</main>
+<%- include('../site-footer.ejs') %>
+<%- include('../footer.ejs') %>

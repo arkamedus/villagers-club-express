@@ -1,0 +1,12 @@
+<% if (user && user.hash === viewing_user.hash) { %>
+    <div class="context-menu">
+
+        <input id="toggle-context-<%= item.id %>" type="checkbox" aria-hidden="true" hidden/>
+        <label class="context-handle" for="toggle-context-<%= item.id %>" aria-label="Context Menu <%= item.name %>"><i
+                    class="fas fa-ellipsis-v fa-fw"></i></label>
+
+        <div class="context-menu-content">
+            <button class="context-item" onclick="removeItemFromList(this)">Remove From List</button>
+        </div>
+    </div>
+<% } %>

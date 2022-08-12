@@ -1,0 +1,81 @@
+<% if (user && offer.status === 2) { %>
+
+    <% if (user.hash === offer.owner.hash) { %>
+        <strong>Trade Accepted! Here are <%= trade.owner.contact.username %>'s Contact Details, Reach out!</strong>
+        <ul>
+            <% if (trade.owner.contact.discord && offer.owner.contact.discord) { %>
+                <li>Discord: <%= trade.owner.contact.discord %></li>
+            <% } %>
+            <% if (trade.owner.contact.twitter && offer.owner.contact.twitter) { %>
+                <li>Twitter: <%= trade.owner.contact.twitter %></li>
+            <% } %>
+            <% if (trade.owner.contact.instagram && offer.owner.contact.instagram) { %>
+                <li>Instagram: <%= trade.owner.contact.instagram %></li>
+            <% } %>
+        </ul>
+    <% } %>
+    <% if (user.hash === trade.owner.hash && offer.owner.hash !== trade.owner.hash) { %>
+        <strong>Trade Accepted! Here are <%= offer.owner.contact.username %>'s Contact Details, Reach out!</strong>
+        <ul>
+            <% if (trade.owner.contact.discord && offer.owner.contact.discord) { %>
+                <li>Discord: <%= offer.owner.contact.discord %></li>
+            <% } %>
+            <% if (trade.owner.contact.twitter && offer.owner.contact.twitter) { %>
+                <li>Twitter: <%= offer.owner.contact.twitter %></li>
+            <% } %>
+            <% if (trade.owner.contact.instagram && offer.owner.contact.instagram) { %>
+                <li>Instagram: <%= offer.owner.contact.instagram %></li>
+            <% } %>
+        </ul>
+    <% } %>
+
+<% } %>
+
+<% if (!user || (user && user.hash !== trade.owner.hash) ) { %>
+    <% if (offer.status === 1) { %>
+        <span class="btn small-info"><i class="fas fa-circle-notch fa-spin"></i> Awaiting Answer</span>
+    <% } else if (offer.status === 2) { %>
+        <span class="btn small-info"><i class="fas fa-check"></i> Accepted</span>
+    <% } else if (offer.status === 3) { %>
+        <span class="btn small-info"><i class="fas fa-random"></i> Trade Completed</span>
+    <% } else if (offer.status === 4) { %>
+        <span class="btn small-info"><i class="fas fa-ban"></i> Declined</span>
+    <% } %>
+
+<% } %>
+
+<% if (user && user.hash === offer.owner.hash && offer.status <= 2 ) { %>
+    <a
+            class="btn primary small-info warning"
+            onclick="tradeCancelOffer(this,'<%= offer.hash %>','<%= trade.hash %>')">Cancel
+        Offer</a><br/>
+<% } %>
+
+<% if (user && user.hash === trade.owner.hash) { %>
+
+    <% if (offer.status === 1) { %>
+
+        <a class="btn primary small-info"
+           onclick="tradeAcceptOffer(this,'<%= offer.hash %>','<%= trade.hash %>')">Accept
+            Offer</a> <a
+                class="btn primary small-info"
+                onclick="tradeDeclineOffer(this,'<%= offer.hash %>','<%= trade.hash %>')">Decline
+            Offer</a><br/>
+        <small>Once you accept an offer, matching contact information will be shown to
+            both parties.
+        </small>
+    <% } %>
+
+    <% if (offer.status === 2) { %>
+        <small>Once you are done trading, close the trade and leave a review. (You won't be able to see contact information anymore)</small>
+        <br/><a class="btn primary small-info warning" onclick="tradeCloseOffer(this,'<%= offer.hash %>','<%= trade.hash %>')">Close / Complete Offer</a>
+    <% } %>
+
+    <% if (offer.status === 3) { %>
+        <span class="btn small-info"><i class="fas fa-random"></i> Trade Completed</span>
+    <% } %>
+
+    <% if (offer.status === 4) { %>
+        <span class="btn small-info"><i class="fas fa-ban"></i> Declined</span>
+    <% } %>
+<% } %>

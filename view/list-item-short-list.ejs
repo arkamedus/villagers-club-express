@@ -1,0 +1,31 @@
+<% for(var i = 0; i < lists.length; i++) { %>
+    <div class="item">
+        <div class="title">
+            <a href="/user/<%= typeof viewing_user !== 'undefined' && viewing_user.hash %>/<%= lists[i].slug %>"><span><%= lists[i].name %> <i class="fas fa-arrow-right"></i></span></a>
+        </div>
+        <div class="content">
+
+            <div class="grid grid-5 align-center justify-center">
+                <% for(var y = 0; y < Math.min(lists[i].items.length, 9); y++) { %>
+                    <% if (lists[i].items[y].type === "item") { %>
+                        <% var vidx = helpers.getVariantIdxFromItemVariation(lists[i].items[y].item, lists[i].items[y].variation); %>
+                        <%- include('./list-item-inner-item.ejs',{item:lists[i].items[y],vidx}) %>
+                    <% }else if (lists[i].items[y].type === "villager"){ %>
+                        <%- include('./list-item-inner-villager.ejs',{item:lists[i].items[y]}) %>
+                    <% } %>
+
+                <% } %>
+
+                    <% if (lists[i].items.length >= 10) { %><a class="btn" href="/user/<%= typeof viewing_user !== 'undefined' && viewing_user.hash %>/<%= lists[i].slug %>">... and <%- (lists[i].items.length - 9) %> more.</a>
+                <% } %>
+            </div>
+            <% if (lists[i].items.length === 0) { %><span>This list is empty.
+                <% if (user && user.hash === viewing_user.hash) { %> Add some <a href="/clothing">Clothing</a>, <a
+                        href="/furniture">Furniture</a>, or <a href="/villagers">Villagers</a>!
+                <% } %>
+            </span>
+            <% } %>
+
+        </div>
+    </div>
+<% } %>

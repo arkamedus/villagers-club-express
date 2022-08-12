@@ -1,0 +1,22 @@
+<div class="context-menu">
+
+    <input id="toggle-context-<%= item.id %>" type="checkbox" aria-hidden="true" hidden/>
+    <label class="context-handle" for="toggle-context-<%= item.id %>" aria-label="Context Menu <%= item.name %>"><i class="fas fa-ellipsis-v fa-fw"></i></label>
+
+    <div class="context-menu-content">
+        <% if (user) { %>
+            <div class="context-menu-inner">
+            </div>
+        <% } else { %>
+            <div>
+                <div class="context-item" style="padding:0;">
+                    <a href="/login" style="margin:0;" class="btn alt override"><i class="far fa-user-circle fa-fw"
+                                                                                   style="pointer-events:none;"></i>
+                        Sign In to Create a List</a>
+
+                </div>
+            </div>
+        <% } %>
+
+    </div>
+</div>

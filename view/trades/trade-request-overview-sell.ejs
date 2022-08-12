@@ -1,0 +1,29 @@
+<div class="item">
+    <div class="title">
+        <% var reqs = 0; for (var i = 0; i < trade.incoming_offers.length; i++) {
+            if (trade.incoming_offers[i].status === 1) {
+                reqs++;
+            }
+        } %>
+        <a href="/trades/view/<%= trade.hash %>"><span>Your Sell Offer <i
+                        class="fas fa-arrow-right"></i><%- reqs ? "<span class='badge'>" + reqs + "</span>" : "" %></span></a>
+    </div>
+    <div class="content">
+        <% if (typeof trade.negotiable === "boolean") { %>
+            <b>Negotiable:</b>
+            <%= (trade.negotiable ? "Yes" : "No") %><br/>
+        <% } %>
+        <% if (typeof trade.is_touch_trade === "boolean") { %>
+            <b>Touch Trade:</b>
+            <%= (trade.is_touch_trade ? "Yes" : "No") %>
+            <br/>
+        <% } %>
+
+        <br>
+
+        <div class="grid grid-4">
+            <%- include('./trade-item-display-items.ejs',{list:trade.offer,list_items:trade.offer_items}) %>
+        </div>
+
+    </div>
+</div>

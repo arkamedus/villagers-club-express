@@ -1,0 +1,9 @@
+<% if (!user) { %>
+<div class="item">
+    <div class="title alt"><span>Join the Club, Become a Member</span></div>
+    <div class="content">
+        <%- include('./perks.ejs') %>
+        <a href="/login" class="btn alt"><i class="far fa-user-circle fa-fw"></i> Sign In</a>
+    </div>
+</div>
+<% } %>

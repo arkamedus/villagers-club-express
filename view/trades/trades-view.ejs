@@ -1,0 +1,198 @@
+<%- include('../header.ejs') %>
+<%- include('../navigation.ejs') %>
+<main>
+    <div class="container">
+
+        <div class="page-header">
+            <h1><span class="header-subtext">Trading Post</span><%= helpers.capitalizeWords(header) %></h1>
+            <%- include('./trades-subnav.ejs') %>
+            <br/>
+
+            <% if (!trade.open) { %>
+                <h3 class="warning">This trade has been closed. No new offers are being taken.</h3>
+                <br/>
+            <% } %>
+
+            <b>Available Communication Channels:</b>
+            <%- include('../messages/communication-methods.ejs',{display_user:trade.owner}) %>
+            <br>
+
+            <% if (typeof trade.negotiable === "boolean") { %>
+                <b>Negotiable:</b>
+                <%= (trade.negotiable ? "Yes, Seller is open to Offers." : "No.") %>
+                <br/>
+            <% } %>
+
+            <% if (typeof trade.is_touch_trade === "boolean") { %>
+                <b>Touch Trade:</b>
+                <%= (trade.is_touch_trade ? "Yes, you will not keep these items." : "No, you will keep these items.") %>
+                <br/>
+            <% } %>
+
+            <% if (trade.notes && trade.notes.length >= 1) { %>
+                <b>Trade Notes:</b>
+                <%= trade.notes %>
+            <% } %>
+
+        </div>
+        <div class="grid grid-1">
+            <div class="item">
+                <div class="title"><span>Offering for <%= (trade.is_touch_trade ? "Touch Trade" : "Sale") %></span>
+                </div>
+                <div class="content">
+                    <div class="variation grid grid-5 align-end">
+                        <%- include('./trade-item-display-items.ejs',{list:trade.offer,list_items:trade.offer_items}) %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item">
+                <div class="title"><span>Looking For</span></div>
+                <div class="content">
+                    <div class="variation grid grid-5 align-end">
+                        <% if (trade.bells) { %>
+                            <div class="variation-item">
+                                <div class="inline-image big">
+                                    <img class="center"
+                                         src="//villagers.club/assets/icons/<%= helpers.getCurrencyIcon((trade.bells) | 0, 'bells') %>.png">
+                                </div>
+                                <span class="btn small-info"><%= (trade.bells).toLocaleString() %> Bells</span>
+                            </div>
+                        <% } %>
+                        <%- include('./trade-item-display-items.ejs',{list:trade.request,list_items:trade.request_items}) %>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="item">
+                <div class="title alt"><span>Interested Users</span></div>
+                <div class="content">
+
+                    <% if (interested_trades.length === 0) { %>
+                        <p>No offers have been placed yet.</p>
+                    <% } %>
+
+                    <% for(var x = 0; x < interested_trades.length; x++) { %>
+                        <strong>
+
+                            <% if (user && user.hash === interested_trades[x].owner.hash) { %><i
+                                    class="fas fa-user"></i>
+                            <% } %>
+
+                            <%= interested_trades[x].owner.contact.username %>
+                            <% if (user && user.hash === interested_trades[x].owner.hash) { %>
+                                <small>(that's you!)</small>
+                            <% } %>
+                            has made an offer</strong><br>
+                        <% if (user && (user.hash === trade.owner.hash || user.hash === interested_trades[x].owner.hash) ) { %>
+                            <% if (interested_trades[x].negotiable) { %>
+                                <% if (interested_trades[x].bells) { %>
+                                    <strong>Bells:</strong> <%= (interested_trades[x].bells).toLocaleString() %>
+                                    <br/><% } %>
+                                <% if (typeof interested_trades[x].is_touch_trade === "boolean") { %>Touch
+                                Trade: <%= (interested_trades[x].is_touch_trade ? "Yes, you will return these items." : "No, you will keep these items.") %>
+                                <br/><% } %>
+
+                                <% if (interested_trades[x].notes && interested_trades[x].notes.length >= 1) { %>
+                                    <strong>Trade Notes:</strong><br/>
+                                    <p><%= interested_trades[x].notes %></p>
+                                <% } %>
+
+                                <div class="variation grid grid-6 align-end">
+                                    <%- include('./trade-item-display-items.ejs',{list:interested_trades[x].offer,list_items:interested_trades[x].offer_items}) %>
+                                </div>
+                            <% } else { %>
+                                Their offer matches what you're requesting.
+                            <% } %>
+
+                        <p>
+
+                            <% } %>
+
+
+                        <div id="trade-owner-controls">
+                            <%- include('./trade-request-accepted.ejs',{trade:trade, offer:interested_trades[x]}) %>
+                        </div>
+
+
+                        </p>
+
+                        <% if (interested_trades[x + 1]) { %>
+                            <hr/><% } %>
+
+                    <% } %>
+                </div>
+            </div>
+
+        </div>
+
+        <% if (user && trade.open && user.hash !== trade.owner.hash ) { %>
+            <% if (!viewing_user_has_posted_offer /*user && user.hash !== trade.owner.hash*/) { %>
+                <hr/>
+                <h3>Post an Offer</h3>
+
+                <% if (!user.contact.twitter && !user.contact.instagram && !user.contact.discord) { %>
+                    <h3 class="warning" style="margin-top:0;margin-bottom:20px;">You do not have a user contact method,
+                        go to your <a href="/profile">profile</a> and add one.<br>
+                        <small>You will not be able to see sellers contact information unless you share a common
+                            messaging platform.
+                        </small>
+                    </h3>
+                <% } %>
+
+                <% if (trade.negotiable) { %>
+                    <div class="grid grid-2">
+                        <div class="item" style="padding:10px;">
+                            <div class="flex flex-row"><input id="request-bells" type="number" class="grow" name="bells"
+                                                              placeholder="Bells (optional)"
+                                                              value="<%= typeof trade.bells === "number" ? trade.bells : "" %>"><span>&nbsp;Bells</span>
+                            </div>
+                        </div>
+                        <div class="item" style="padding:10px;">
+                            <div><input id="request-touch" type="checkbox" name="touch" style="width:auto;"> Touch Trade
+                                /
+                                Cataloging?
+                            </div>
+                        </div>
+                    </div>
+                    <textarea id="request-notes" placeholder="Notes (optional)"></textarea><br/>
+                    <div class="item-list-builder"
+                         style="opacity: 0;"><%= JSON.stringify(trade.trade_offer || []) %></div>
+                <% } else { %>
+                    <p>This trade is non-negotiable, you must supply Selling with the Items/Villagers they are looking
+                        for.</p>
+                <% } %>
+                <button onclick="submitOffer(this,<%= trade.negotiable %>,'<%= trade.hash %>')">Submit Offer</button>
+
+            <% } else { %>
+                <hr/>
+                <h3>You've made an offer on this trade request!</h3>
+            <% } %>
+        <% } %>
+
+        <% if (user && user.hash === trade.owner.hash && trade.open) { %>
+            <br/><br/>
+            This is your trade!
+            <form action="/trades/close" method="post"><input name="hash" type="hidden"
+                                                              value="<%= trade.hash %>"/><input class="btn warning"
+                                                                                                style="width:auto;"
+                                                                                                type="submit"
+                                                                                                value="Mark as Completed / Close Sell Offer">
+            </form>
+        <% } %>
+
+        <% if (!user) { %>
+
+            <h2>Only VillagerClub Members can Post Offers for Items/Villagers.</h2>
+
+            <div style="padding-top:30px;">
+                <%- include('../membership-perks.ejs') %>
+            </div>
+        <% } %>
+
+    </div>
+
+</main>
+<%- include('../site-footer.ejs') %>
+<%- include('../footer.ejs') %>

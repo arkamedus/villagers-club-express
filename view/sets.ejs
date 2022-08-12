@@ -1,0 +1,60 @@
+<%- include('./header.ejs') %>
+<%- include('./navigation.ejs') %>
+<main>
+    <div class="container">
+
+        <div class="page-header">
+            <h1><%= helpers.capitalizeWords(header) %></h1>
+            <div>
+                <% for(var i = 0; i < groups.length; i++) { %>
+                    <a class='btn' href="/<%= groups[i] %>"
+                       class="btn"><%= helpers.capitalizeWords(groups[i]) %></a>
+                <% } %>
+            </div>
+            <% for(var i = 0; i < subcategories.length; i++) { %>
+                <a href="/<%= category %>/<%= helpers.slugify(subcategories[i]) %>"
+                   class="btn small-info"><%= helpers.capitalizeWords(subcategories[i]) %></a>
+            <% } %>
+            <%- pagination %>
+        </div>
+
+        <div class="grid grid-1 items-list">
+            <% for (var set in items) { %>
+
+                <div class="item">
+                    <div class="title"><span><%= items[set].name %></span></div>
+                    <div class="content">
+
+                        <div class="variation grid grid-4">
+                            <% for(var i = 0; i < items[set].items.length; i++) { %>
+                                <a href="<%= items[set].items[i].url %>"
+                                   class="variation-item">
+                                    <div class="inline-image big"><img class="big"
+                                                                       src="<%= items[set].items[i].critterpediaImage || (items[set].items[i].variants ? items[set].items[i].variants[0].image : false) || items[set].items[i].albumImage || items[set].items[i].closetImage || items[set].items[i].image %>">
+                                    </div>
+                                    <span class="btn small-info"><%= items[set].items[i].name %></span></a>
+                            <% } %>
+                        </div>
+
+                    </div>
+                </div>
+
+            <% } %>
+
+        </div>
+
+        <%- pagination %>
+
+        <% if (!user) { %>
+            <div style="padding-top:30px;">
+                <%- include('./membership-perks.ejs') %>
+            </div>
+        <% } %>
+
+        <%- include('ads-amazon.ejs') %>
+
+    </div>
+
+</main>
+<%- include('./site-footer.ejs') %>
+<%- include('./footer.ejs') %>

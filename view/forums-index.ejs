@@ -1,0 +1,61 @@
+<%- include('./header.ejs') %>
+<%- include('./navigation.ejs') %>
+<main>
+    <div class="container">
+
+        <div class="page-header">
+            <h1><%= helpers.capitalizeWords(header) %></h1>
+            <% for(var i = 0; i < subcategories.length; i++) { %>
+                <a href="/<%= category %>/<%= subcategories[i] %>"
+                   class="btn"><%= helpers.capitalizeWords(subcategories[i]) %></a>
+            <% } %>
+        </div>
+
+        <% if (user && user.rank >= 8) { %>
+
+            <form action="/forums/create/category" method="post">
+                <div class="flex-row nowrap page-search" style="margin-bottom:30px;">
+                    <input name="name" class="grow" type="text" placeholder="Category Name"
+                           value="">
+                    <button type="submit" value="Submit"><i class="fas fa-search fa-fw"></i> Create Category</button>
+                </div>
+            </form>
+        <% } %>
+
+        <% if (items.length > 0) { %>
+
+            <div class="grid grid-1 items-list">
+                <% for(var i = 0; i < items.length; i++) { %>
+
+                    <div class="item">
+                        <div class="title"><span><%= items[i].name %></span> <a class="right"
+                                                                                href="/forums/<%= items[i].slug %>"><span>View All</span></a>
+                        </div>
+                        <div class="content">
+                            <ul>
+                                <% for(var x = 0; x < items[i].posts.length; x++) { %>
+
+                                    <li><a href="/forums/<%= items[i].slug %>/<%= items[i].posts[x].slug %>"><%= items[i].posts[x].name %></a></li>
+
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+
+                <% } %>
+            </div>
+        <% } %>
+
+        <% if (!user) { %>
+            <div style="padding-top:30px;">
+                <%- include('./membership-perks.ejs') %>
+            </div>
+        <% } %>
+
+        <%- include('ads-amazon.ejs') %>
+
+    </div>
+
+</main>
+<%- include('./site-footer.ejs') %>
+<%- include('./footer.ejs') %>

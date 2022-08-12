@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, viewport-fit:cover">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=DM+Sans:400,400i,500,500i,700,700i&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/theme.css">
+    <meta name="ahrefs-site-verification" content="f47fdf86fa3efbba1e34a68c55a0496b874523a2ae209b6e0b622924e5387711">
+    <title><%= title %></title>
+    <% if (canonical || canonical === '') { %>
+        <link rel="canonical" href="https://villagers.club<%= canonical %>"/>
+    <% } %>
+    <% if (noindex) { %>
+        <meta name="robots" content="noindex, follow"/>
+        <meta name="googlebot" content="noindex, follow"/>
+    <% } %>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="194x194" href="/favicon-194x194.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#bc8cb4">
+    <meta name="apple-mobile-web-app-title" content="VillagersClub">
+    <meta name="application-name" content="VillagersClub">
+    <meta name="msapplication-TileColor" content="#603cba">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <% if (typeof title !== 'undefined') { %>
+        <meta property="og:title" content="<%= title %>"/>
+    <% } %>
+    <% if (typeof description !== 'undefined') { %>
+        <meta property="og:description" content="<%= description %>"/>
+        <meta name="description" content="<%= description %>">
+    <% } %>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="VillagersClub">
+    <% if (typeof item !== 'undefined' && (item.type === 'item' || item.type === 'critter')) { %>
+
+        <meta property="og:url"
+              content="https://villagers.club/<%= item.category %><%= (item.subcategory ? "/" + item.subcategory : '') %>/<%= item.id %><%= (typeof variation_item !=="undefined" ? "/" + variation_item.id : '') %>"/>
+        <meta property="og:image"
+              content="<%= item.critterpediaImage || (typeof variation !=="undefined" ? variation_item.image || variation_item.closetImage || variation_item.storageImage || false : false) || item.image || item.albumImage %>"/>
+
+    <% }else if (typeof item !== 'undefined' && (item.type === 'villager')){ %>
+        <meta property="og:url" content="https://villagers.club/villagers/<% item.id %>"/>
+        <meta property="og:image" content="<%= item.image %>"/>
+
+    <% } else if (typeof item !== 'undefined' && (item.type === 'reaction')){ %>
+        <meta property="og:url" content="https://villagers.club/reactions/<% item.id %>"/>
+        <meta property="og:image" content="<%= item.image %>"/>
+
+    <% } else if (typeof meta_image !== 'undefined'){ %>
+
+        <meta property="og:image" content="<%- meta_image %>"/>
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="@VillagersClub">
+        <meta name="twitter:creator" content="@arkamedus">
+        <meta name="twitter:image" content="<%- meta_image %>"/>
+
+
+<% } else { %>
+
+        <meta property="og:image" content="https://villagers.club/opengraph-image.png"/>
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="@VillagersClub">
+        <meta name="twitter:creator" content="@arkamedus">
+        <meta name="twitter:image" content="https://villagers.club/opengraph-image.png"/>
+
+    <% } %>
+
+    <% if (typeof meta_url !== 'undefined'){ %>
+
+        <meta property="og:url" content="<%- meta_url %>"/>
+
+    <% }else if (canonical !== 'undefined' ){ %>
+        <meta property="og:url" content="https://villagers.club<%- canonical %>"/>
+    <% } %>
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "url": "https://villagers.club",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://villagers.club/search/{search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+    </script>
+    <% if (environment && environment === 'production') { %>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163911335-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+
+            gtag('js', new Date());
+            gtag('config', 'UA-163911335-1');
+        </script>
+        <script data-ad-client="ca-pub-6000633824161261" async
+                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <% } %>
+</head>
+<body class="flex-col">

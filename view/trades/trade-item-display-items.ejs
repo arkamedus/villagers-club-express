@@ -1,0 +1,11 @@
+<% for(var x = 0; x < list_items.length; x++) { %>
+    <a href="<%=list_items[x].url%>" class="variation-item">
+        <div class="inline-image big">
+            <img class="big" src="<%= list[x].variation && list_items[x].variants[list[x]._variation_idx] ? list_items[x].variants[list[x]._variation_idx].image : list_items[x].image||"" %>">
+        </div>
+        <span class="btn small-info">
+            <span class="amount"><%= list[x].amount %></span>
+            <%= list[x].variation && list_items[x].variants[list[x]._variation_idx] ? list_items[x].variants[list[x]._variation_idx].full_name + " " : "" %><%= list_items[x].name %>
+        </span>
+    </a>
+<% } %>

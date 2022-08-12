@@ -1,0 +1,33 @@
+<div class="item">
+    <div class="title">
+        <a href="/trades/view/<%= offer.parent.hash %>"><span>Trade Offer to <%= offer.parent.owner.contact.username %> <i
+                        class="fas fa-arrow-right"></i></span></a>
+    </div>
+    <div class="content">
+        <% if (typeof offer.parent.negotiable === "boolean") { %>
+            <b>Negotiable:</b>
+            <%= (offer.parent.negotiable ? "Yes" : "No") %><br/>
+        <% } %>
+        <% if (typeof offer.parent.is_touch_trade === "boolean") { %>
+            <b>Touch Trade:</b>
+            <%= (offer.parent.is_touch_trade ? "Yes" : "No") %>
+            <br/>
+        <% } %>
+
+        <br>
+
+        <div class="grid grid-4">
+            <%- include('./trade-item-display-items.ejs',{list:offer.parent.offer,list_items:offer.parent.offer_items}) %>
+        </div>
+        <% if (offer.status === 1) { %>
+            <span class="btn small-info"><i class="fas fa-circle-notch fa-spin"></i> Awaiting Answer</span>
+        <% } else if (offer.status === 2) { %>
+            <span class="btn small-info"><i class="fas fa-check"></i> Accepted</span>
+        <% } else if (offer.status === 3) { %>
+            <span class="btn small-info"><i class="fas fa-random"></i> Trade Completed</span>
+        <% } else if (offer.status === 4) { %>
+            <span class="btn small-info"><i class="fas fa-ban"></i> Declined</span>
+        <% } %>
+
+    </div>
+</div>

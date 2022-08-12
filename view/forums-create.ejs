@@ -1,0 +1,40 @@
+<%- include('./header.ejs') %>
+<%- include('./navigation.ejs') %>
+<main>
+    <div class="container">
+
+        <div class="page-header">
+            <h1><%= helpers.capitalizeWords(header) %></h1>
+        </div>
+
+        <% if (user && user.rank >= 1) { %>
+
+            <form action="/forums/create/post/<%= category.slug %>" method="post">
+                <div class="" style="margin-bottom:30px;">
+                    <input name="name" type="text" placeholder="Post Title" value=""><br/>
+                    <textarea name="body" placeholder="Your Content Here"></textarea><br/>
+                    <button type="submit" value="Submit"><i class="fas fa-search fa-fw"></i> Post</button>
+                </div>
+            </form>
+
+        <% } %>
+
+        <% if (!user) { %>
+
+            <div style="padding-top:30px;">
+                <h2>You need to be logged in to VillagersClub to post a Thread</h2>
+            </div>
+
+            <div style="padding-top:30px;">
+                <%- include('./membership-perks.ejs') %>
+            </div>
+
+        <% } %>
+
+        <%- include('ads-amazon.ejs') %>
+
+    </div>
+
+</main>
+<%- include('./site-footer.ejs') %>
+<%- include('./footer.ejs') %>

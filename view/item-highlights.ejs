@@ -1,0 +1,23 @@
+<div class="item-properties flex align-center">
+
+    <% if (item.type === "item" && item.diy) { %>
+        <span class="tooltip" data-tooltip="Craftable">
+                <img class="icon-image" alt="" aria-hidden="true" src="/icons/craftable.png"/></span>
+    <% } %>
+
+    <% if (item.type === "item" && item.catalog && item.catalog === "For sale") { %>
+        <span class="tooltip"
+              data-tooltip="Catalog<% if (item.type === "item" && item.buy >= 0 ) { %> Price <%= item.buy.toLocaleString() %> Bells<% } %>">
+                <img class="icon-image" alt="" aria-hidden="true" src="/icons/catalog.png"/></span>
+    <% } %>
+
+    <% if (item.customizationKitCost) { %>
+        <span class="tooltip" data-tooltip="<%= item.variants.length %> Customizations">
+                <img class="icon-image" alt="" aria-hidden="true" src="/icons/customize.png"/></span>
+
+    <% } else if (item.variants && item.variants.length > 1) { %>
+        <span class="tooltip" data-tooltip="<%= item.variants.length %> Variations">
+                <img class="icon-image" alt="" aria-hidden="true" src="/icons/variants.png"/></span>
+    <% } %>
+
+</div>

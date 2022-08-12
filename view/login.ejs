@@ -1,0 +1,20 @@
+<%- include('./header.ejs') %>
+<%- include('./navigation.ejs') %>
+<main>
+    <div class="container med">
+        <h1>Sign In to VillagersClub</h1>
+        <p>
+            <%- include('./perks') %>
+        </p>
+        <p>
+<% if (!user) { %>
+    <a href="/login/google"><img style="height:3em;" src="/btn_google_signin_light_normal_web@2x.png" alt="Login with Google"></a>
+            <p style="font-size:9.5pt;">If you can't see the "Sign in with Google" button above, you may need to disable your ad blocker.</button>
+<% } else { %>
+    You are already logged in, <a href="/profile">View your profile</a>.
+<% } %>
+        </p>
+    </div>
+</main>
+<%- include('./site-footer.ejs') %>
+<%- include('./footer.ejs') %>

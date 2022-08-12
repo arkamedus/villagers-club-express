@@ -1,0 +1,46 @@
+<div class="item">
+    <div class="title">
+        <a href="/trades/view/<%= trade.hash %>"><span>Sell Offer by <%= trade.owner.contact.username %> <i
+                        class="fas fa-arrow-right"></i></span></a>
+    </div>
+    <div class="content">
+        <b>Available Communication Channels:</b>
+        <%- include('../messages/communication-methods.ejs',{display_user:trade.owner}) %>
+        <br/>
+
+        <% if (typeof trade.negotiable === "boolean") { %>
+            <b>Negotiable:</b>
+            <%= (trade.negotiable ? "Yes" : "No") %>
+            <br/>
+        <% } %>
+
+        <% if (typeof trade.is_touch_trade === "boolean") { %>
+            <b>Touch Trade:</b>
+            <%= (trade.is_touch_trade ? "Yes" : "No") %>
+            <br>
+        <% } %>
+
+        <h4>Offering:</h4>
+        <div class="variation grid grid-4">
+            <%- include('./trade-item-display-items.ejs',{list:trade.offer,list_items:trade.offer_items}) %>
+        </div>
+
+        <h4>Looking For:</h4>
+
+        <div class="variation grid grid-4">
+
+            <% if (trade.bells) { %>
+                <div class="variation-item">
+                    <div class="inline-image big">
+                        <img class="center"
+                             src="//villagers.club/assets/icons/<%= helpers.getCurrencyIcon((trade.bells) | 0, 'bells') %>.png">
+                    </div>
+                    <span class="btn small-info"><%= (trade.bells).toLocaleString() %> Bells</span>
+                </div>
+            <% } %>
+
+            <%- include('./trade-item-display-items.ejs',{list:trade.request,list_items:trade.request_items}) %>
+        </div>
+
+    </div>
+</div>

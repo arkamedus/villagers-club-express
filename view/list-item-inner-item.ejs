@@ -1,0 +1,4 @@
+<div class="content text-center">
+    <img src="<%= item.variation ? item.item.variants[vidx].image || item.item.variants[vidx].critterpediaImage || item.item.variants[vidx].closetImage || item.item.variants[vidx].storageImage : item.item.image || item.item.critterpediaImage || item.item.closetImage || item.item.storageImage %>"
+         alt="Animal Crossing New Horizons <%= item.item.name %><%= vidx && item.item.variants && item.item.variants.length ? " (" + item.item.variants[vidx].name + ")" : "" %> Image">
+</div>

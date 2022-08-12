@@ -1,0 +1,55 @@
+<%- include('./header.ejs') %>
+<%- include('./navigation.ejs') %>
+<main>
+    <div class="container">
+
+        <div class="page-header">
+            <h1><%= helpers.capitalizeWords(header) %></h1>
+            <div>
+                <% for(var i = 0; i < groups.length; i++) { %>
+                    <a class='btn' href="/<%= groups[i] %>"
+                       class="btn"><%= helpers.capitalizeWords(groups[i]) %></a>
+                <% } %>
+                <% for(var i = 0; i < subcategories.length; i++) { %>
+                    <a href="/<%= category %>/<%= helpers.slugify(subcategories[i]) %>"
+                       class="btn small-info"><%= helpers.capitalizeWords(subcategories[i]) %></a>
+                <% } %>
+            </div>
+            <%- pagination %>
+        </div>
+
+        <div class="grid grid-4 items-list">
+            <% for (var set in items) { %>
+
+                <a href="/reactions/<%= items[set].id %>">
+                    <div class="item">
+                        <div class="title"><span><%= items[set].name %></span></div>
+                        <div class="content">
+                            <div class="reaction-item">
+                                <img class="big"
+                                     src="<%= items[set].image %>">
+
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            <% } %>
+
+        </div>
+
+        <%- pagination %>
+
+        <% if (!user) { %>
+            <div style="padding-top:30px;">
+                <%- include('./membership-perks.ejs') %>
+            </div>
+        <% } %>
+
+        <%- include('ads-amazon.ejs') %>
+
+    </div>
+
+</main>
+<%- include('./site-footer.ejs') %>
+<%- include('./footer.ejs') %>

@@ -1,0 +1,43 @@
+<%- include('./header.ejs') %>
+<%- include('./navigation.ejs') %>
+<main>
+    <div class="container">
+        <h1><%= item.name %></h1>
+        <p class="breadcrumbs">
+            <a href="/<%= category %>"><%= helpers.capitalizeFirstWord(category) %></a>
+            <% if (item.subcategory) { %> &gt; <a
+                    href="/<%= item.category %>/<%= item.subcategory %>"><%= helpers.capitalizeFirstWord(item.subcategory) %></a>
+            <% } %>
+            &gt; <%= item.name %>
+        </p>
+
+
+        <div class="grid grid-2" style="margin-bottom: 18pt;">
+
+            <div class="item-view-image-container flex"><img
+                        src="<%= item.image %>"
+                        class="item-view"
+                        alt="Animal Crossing New Horizons <%= item.name %> Reaction Image">
+            </div>
+
+            <div class="item">
+                <div class="title"><span>Details about <%= item.name %> Reaction</span></div>
+                <div class="content">
+                    Can be learned from:
+                    <% line=[]; for(var i = 0; i < item.source.length; i++) { line.push('<a href="'+helpers.slugify(item.source[i].toLowerCase()=='all'?"/villagers":"/villagers/personality/"+item.source[i])+'" class="inline-pill">' + helpers.capitalizeFirstWord(item.source[i]) + "</a>"); }%>
+                    <%- helpers.listToString(line); %> Villagers
+                </div>
+            </div>
+
+        </div>
+
+        <% if (!user) { %>
+            <div style="padding-top:30px;">
+                <%- include('./membership-perks.ejs') %>
+            </div>
+        <% } %>
+
+    </div>
+</main>
+<%- include('./site-footer.ejs') %>
+<%- include('./footer.ejs') %>

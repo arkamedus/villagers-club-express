@@ -1,0 +1,140 @@
+<header id="navbar" class=" <%- (!!search ? "pill-search-active" : "") %>">
+    <div class="inner container">
+
+        <a class="site-title no-decoration" href="/">
+            <img src="/villagers-club-icon.svg" alt="VillagersClub Logo">
+            <span>VillagersClub</span>
+        </a>
+
+        <nav>
+            <a href="/villagers" class="btn">
+                <img class="icon-image" alt="" aria-hidden="true" src="/icons/villagers.png">Villagers</a>
+            <a href="/clothing" class="btn">
+                <img class="icon-image" alt="" aria-hidden="true" src="/icons/tops.png">Clothing</a>
+            <a href="/furniture" class="btn">
+                <img class="icon-image" alt="" aria-hidden="true" src="/icons/furniture.png">Furniture</a>
+            <!--
+                        <a href="/tools" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/tools.png">Tools</a>
+                        <a href="/critters" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/critters.png">Critters</a>
+                        <a href="/other" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/other.png">Other</a>
+
+                        <a href="/sets" class="premium show-mobile"><i class="fas fa-th fa-fw"></i> Sets</a>
+
+                        <a href="/trades"><i class="fas fa-random fa-fw"></i> Trades</a>
+                        -->
+            <!--<a href="/recipes">Recipes</a>-->
+        </nav>
+
+        <% if (!user) { %>
+            <a href="/login" class="right btn"><i class="far fa-user-circle fa-fw"></i>
+                <span class="hide-mobile"> Sign In</span></a>
+        <% } else { %>
+            <button id="toggle-profile" class="right btn" aria-label="Profile Menu"><i
+                        class="far fa-user-circle fa-fw"></i>
+                <span class="hide-mobile"> <%= helpers.truncate(user.contact.username, 12, true) %></span></button>
+        <% } %>
+
+        <button id="toggle-nav" class="right btn" aria-label="Main Menu"><i
+                    class="fas fa-bars fa-fw"></i></button>
+
+        <div class="right btn" id="pill-search-expand">
+            <input id="pill-search" placeholder="Search ..." type="text" value="<%- (search || "") %>"
+                   aria-label="Search"><i
+                    id="pill-search-icon" class="fas fa-search fa-fw"></i>
+        </div>
+
+
+        <div class="mega-menu">
+            <div class="container">
+                <div id="nav-layer" class="grid grid-3">
+                    <div class="set-one">
+                        <h4>Site Links</h4>
+                        <a href="/villagers" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/villagers.png">Villagers</a>
+                        <a href="/clothing" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/tops.png">Clothing</a>
+                        <a href="/furniture" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/furniture.png">Furniture</a>
+                        <a href="/other/art" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/art.png">Art</a>
+                        <a href="/other/music" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/music.png">Music</a>
+                        <a href="/tools" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/tools.png">Tools</a>
+                        <a href="/other" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/other.png">Other</a>
+                    </div>
+
+                    <div class="set-two">
+                        <h4>Critters</h4>
+                        <a href="/critters/insects" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/insects.png">Insects</a>
+                        <a href="/critters/fish" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/fish.png">Fish</a>
+                        <a href="/critters/sea-creatures" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/fish.png">Sea-Creatures</a>
+                        <a href="/critters/fossils" class="btn">
+                            <img class="icon-image" alt="" aria-hidden="true" src="/icons/fossils.png">Fossils</a>
+                    </div>
+
+                    <div class="set-three">
+                        <h4>Others</h4>
+                        <a href="/reactions" class="btn"><i class="fas fa-surprise fa-fw"></i> Reactions</a>
+                        <a href="/sets" class="btn"><i class="fas fa-th fa-fw"></i> Sets</a>
+
+                    </div>
+
+                    <div class="set-four">
+                        <h4><i class="fas fa-random fa-fw"></i> Trading Post</h4>
+                        <a href="/trades" class="btn"><i class="fas fa-random fa-fw"></i> Trades</a>
+                        <a href="/trades/sell" class="btn"><i class="fas fa-random fa-fw"></i> Sell</a>
+                        <a href="/trades/buy" class="btn"><i class="fas fa-random fa-fw"></i> Buy</a>
+                    </div>
+
+                    <div class="set-five">
+                        <h4>Recent Blogs</h4>
+                        <a href="/blog/is-animal-crossing-worth-it" class="btn"><i class="fas fa-random fa-fw"></i> Is
+                            Animal
+                            Crossing Worth It?</a>
+                        <!--<a href="/recipes">Recipes</a>-->
+                    </div>
+                </div>
+
+                <% if (user) { %>
+                    <div id="profile-layer">
+                        <div class="bio">
+                            <h4><%= helpers.truncate(user.contact.username, 35, true) %></h4>
+                            <b>Island:</b> <%= (user.ac_island_name) %>
+                            <br>
+                            <b>Fruit:</b> <img
+                                    src="https://villagers.club/assets/items/crop/<%= user.ac_island_native_fruit %>.png">
+                            <%= (helpers.capitalizeWords(user.ac_island_native_fruit)) %>
+                        </div>
+                        <hr>
+                        <a href="/user/<%= user.hash %>" class="btn">View Profile</a>
+                        <a href="/profile" class="btn">Account Settings</a>
+                        <!--<a href="/profile" class="btn">View Lists</a>-->
+                        <a href="/logout" class="btn">Log Out</a>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+
+    </div>
+    <div class="inner flash" id="flash">
+        <% if (typeof messages !== 'undefined') { %>
+            <% if (messages.info) { %>
+                <div class="container info"><%- messages.info %></div>
+            <% } %>
+            <% if (messages.warning) { %>
+                <div class="container warning"><%- messages.warning %></div>
+            <% } %>
+            <% if (messages.error) { %>
+                <div class="container error"><%- messages.error %></div>
+            <% } %>
+        <% } %>
+    </div>
+</header>
