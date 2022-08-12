@@ -1,0 +1,8 @@
+[
+  {
+    "type": "item",
+    "id": "scary-painting",
+    "variant": null,
+    "details": ["When placed, the fake variant of the Scary Painting will switch from frowning to a smile during the night."]
+  }
+]
