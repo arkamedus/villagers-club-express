@@ -1,0 +1,48 @@
+{
+  "name": "villagers-club-express",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.ts",
+  "dependencies": {
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.13.51",
+    "body-parser": "^1.19.0",
+    "canvas": "^2.8.0",
+    "chai": "^4.2.0",
+    "cookie-parser": "^1.4.5",
+    "cookie-session": "^1.4.0",
+    "cors": "^2.8.5",
+    "discord.js": "^12.2.0",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.0.2",
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-session": "^1.17.1",
+    "mocha": "^7.1.1",
+    "moment": "^2.24.0",
+    "mongodb": "^3.5.6",
+    "nodemailer": "^6.4.6",
+    "passport": "^0.4.1",
+    "passport-google-oauth": "^2.0.0",
+    "request": "^2.88.2",
+    "sha1": "^1.1.1",
+    "string-similarity": "^4.0.1",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.8.3",
+    "uuid": "^7.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kno-core/villagers-club-express.git"
+  },
+  "author": "Gordon Goodrum, Tabitha Roba",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kno-core/villagers-club-express/issues"
+  },
+  "homepage": "https://github.com/kno-core/villagers-club-express#readme"
+}
