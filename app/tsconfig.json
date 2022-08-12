@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+	"module": "system",
+	"target": "es5",
+	"sourceMap": true,
+	"outFile": "../dist/script.js",
+	"lib": [
+	  "es6",
+	  "dom"
+	]
+  },
+  "compileOnSave": false,
+  "include": [
+	"app.ts"
+  ],
+  "exclude": [
+	"node_modules"
+  ]
+}
